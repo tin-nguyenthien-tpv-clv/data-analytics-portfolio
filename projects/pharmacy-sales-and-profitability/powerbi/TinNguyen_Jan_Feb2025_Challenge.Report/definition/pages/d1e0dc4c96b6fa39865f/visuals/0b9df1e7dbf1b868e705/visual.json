@@ -1,0 +1,123 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "0b9df1e7dbf1b868e705",
+  "position": {
+    "x": 236.30898333142116,
+    "y": 42.517721633094588,
+    "z": 120,
+    "height": 148.14066264566566,
+    "width": 1027.1384786848703,
+    "tabOrder": 120
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Promo Revenue Share %"
+                }
+              },
+              "queryRef": "_Measures.Promo Revenue Share %",
+              "nativeQueryRef": "Promo Revenue Share %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Margin % (Non-Promo)"
+                }
+              },
+              "queryRef": "_Measures.Margin % (Non-Promo)",
+              "nativeQueryRef": "Margin % (Non-Promo)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Margin % (Promo)"
+                }
+              },
+              "queryRef": "_Measures.Margin % (Promo)",
+              "nativeQueryRef": "Margin % (Promo)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Promo Margin Gap (pp)"
+                }
+              },
+              "queryRef": "_Measures.Promo Margin Gap (pp)",
+              "nativeQueryRef": "Promo Margin Gap (pp)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Margin Foregone"
+                }
+              },
+              "queryRef": "_Measures.Margin Foregone",
+              "nativeQueryRef": "Margin Foregone"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "layout": [
+        {
+          "properties": {
+            "columnCount": {
+              "expr": {
+                "Literal": {
+                  "Value": "5L"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "paddingUniform": {
+              "expr": {
+                "Literal": {
+                  "Value": "6L"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

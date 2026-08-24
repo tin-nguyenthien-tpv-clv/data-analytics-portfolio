@@ -2,15 +2,17 @@ table _Measures
 	lineageTag: 4fec034d-016a-4580-8e07-ef9690678927
 
 	measure 'Total Revenue' = SUM(FactSales[RevenueEUR])
-		formatString: 0.0
 		lineageTag: 6e9aac75-0550-40c2-b186-b75b4096feb9
 
+		formatStringDefinition = "#,0"
+
 	measure 'Total Margin' = SUM(FactSales[MarginEUR])
-		formatString: 0.0
 		lineageTag: 22c8d864-fdce-440a-8251-37470519694b
 
+		formatStringDefinition = "#,0"
+
 	measure 'Units Sold' = SUM(FactSales[UnitsSold])
-		formatString: 0
+		formatString: #,0
 		lineageTag: 7cd4f90e-bef5-4394-b022-33453d192adb
 
 		annotation PBI_FormatHint = {"isDecimal":true}
@@ -24,8 +26,10 @@ table _Measures
 		lineageTag: 0301d9e1-6da1-440c-845f-e0e1c65e4f5d
 
 	measure 'Revenue per Pharmacy' = DIVIDE([Total Revenue], [Active Pharmacies])
-		formatString: 0.0
+		formatString: 0
 		lineageTag: a9b9cb23-3c08-48b5-b7ff-43df3ac339d2
+
+		annotation PBI_FormatHint = {"isDecimal":true}
 
 	measure 'Avg Unit Price' = DIVIDE([Total Revenue], [Units Sold])
 		formatString: 0.00
@@ -34,10 +38,10 @@ table _Measures
 	measure 'Margin % vs Group (pp)' =
 			
 			VAR _Group =
-			    CALCULATE([Margin %], ALLSELECTED() )
+			    CALCULATE( [Margin %], ALLSELECTED() )
 			RETURN
-			    [Margin %] - _Group
-		formatString: 0.00%;-0.00%;0.00%
+			    ( [Margin %] - _Group ) * 100
+		formatString: 0.00
 		lineageTag: ae99ac7e-1407-4bf1-a8d4-3f9a04bf3569
 
 	measure 'Revenue YoY %' =
@@ -55,8 +59,9 @@ table _Measures
 			    CALCULATE( [Margin %], SAMEPERIODLASTYEAR(DimDate[Date]) )
 			RETURN
 			    [Margin %] - _Prior
-		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 8ea74979-874b-4669-9884-4839c69a5d23
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Seasonality Index' =
 			
@@ -71,6 +76,271 @@ table _Measures
 			    DIVIDE( _ThisMonthAvg, _AllMonthAvg )
 		formatString: 0.00
 		lineageTag: 212a1527-9a7a-4097-b407-87b1577f0c2e
+
+	measure 'Units per Sale' =
+			
+			DIVIDE( [Units Sold], COUNTROWS(FactSales) )
+		lineageTag: 3140d505-4811-45df-a2a3-ad9b46b36a9d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Daily Revenue' =
+			
+			DIVIDE( [Total Revenue], DISTINCTCOUNT(DimDate[Date]) )
+		formatString: #,0
+		lineageTag: c4482dce-5481-4533-ad8f-9cfe53f9f64f
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Revenue LY' =
+			
+			CALCULATE( [Total Revenue], SAMEPERIODLASTYEAR(DimDate[Date]) )
+		formatString: #,0
+		lineageTag: 31f88101-4020-40a1-b4b7-862c56721285
+
+	measure 'Revenue MoM %' =
+			
+			VAR _Prev =
+			    CALCULATE( [Total Revenue], DATEADD(DimDate[Date], -1, MONTH) )
+			RETURN
+			    DIVIDE( [Total Revenue] - _Prev, _Prev )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: fb3d9d61-fdf0-489a-aa5e-e331a05fbc79
+
+	measure 'Revenue Contribution %' =
+			
+			DIVIDE( [Total Revenue], CALCULATE( [Total Revenue], ALLSELECTED() ) )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: f6559558-851c-472c-9f3d-550a496d5b53
+
+	measure 'Margin Contribution %' =
+			
+			DIVIDE( [Total Margin], CALCULATE( [Total Margin], ALLSELECTED() ) )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 51fe2260-bf89-442c-bbb6-c304288157a9
+
+	measure 'Cumulative Revenue %' =
+			
+			VAR _Regions =
+			    CALCULATETABLE( VALUES(DimPharmacy[Region]), ALLSELECTED(DimPharmacy) )
+			VAR _Current = [Total Revenue]
+			VAR _Running =
+			    SUMX(
+			        FILTER( _Regions, CALCULATE( [Total Revenue] ) >= _Current ),
+			        CALCULATE( [Total Revenue] )
+			    )
+			RETURN
+			    DIVIDE( _Running, CALCULATE( [Total Revenue], ALLSELECTED(DimPharmacy) ) )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b1ac184e-c889-4c32-a7f1-9f074bde3c6a
+
+	measure 'Active Days' =
+			
+			DISTINCTCOUNT( FactSales[DateKey] )
+		formatString: #,0
+		lineageTag: b4e384fe-9bee-45e4-a2b7-01d9aca26854
+
+	measure 'Revenue per Active Day' =
+			
+			DIVIDE( [Total Revenue], [Active Days] )
+		formatString: #,0
+		lineageTag: bae3f663-81c8-4a5a-97ec-0cb18c8adc24
+
+	measure 'Region Avg Margin %' =
+			
+			CALCULATE( [Margin %], ALLEXCEPT( DimPharmacy, DimPharmacy[Country], DimPharmacy[Region] ) )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 50514e01-508c-42dc-b41b-ad7ca370cf58
+
+	measure 'Region Avg Revenue per Day' =
+			
+			VAR _RegionRevenue =
+			    CALCULATE( [Total Revenue], ALLEXCEPT( DimPharmacy, DimPharmacy[Country], DimPharmacy[Region] ) )
+			VAR _RegionDays =
+			    CALCULATE( [Active Days], ALLEXCEPT( DimPharmacy, DimPharmacy[Country], DimPharmacy[Region] ) )
+			RETURN
+			    DIVIDE( _RegionRevenue, _RegionDays )
+		formatString: #,0
+		lineageTag: eb1487ec-5246-4ec0-b341-a2194b2db642
+
+	measure 'Margin % vs Region (pp)' =
+			
+			( [Margin %] - [Region Avg Margin %] ) * 100
+		formatString: 0.00" pp"
+		lineageTag: b612f8da-83bc-4eca-b3a6-0235dee98a70
+
+	measure 'Revenue per Day vs Region %' =
+			
+			VAR _Peer = [Region Avg Revenue per Day]
+			RETURN
+			    DIVIDE( [Revenue per Active Day] - _Peer, _Peer )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: c6750754-48a7-4873-8210-c850e2c0b4eb
+
+	measure 'Rank in Region' =
+			
+			RANKX(
+			    CALCULATETABLE(
+			        VALUES( DimPharmacy[PharmacyName] ),
+			        ALLEXCEPT( DimPharmacy, DimPharmacy[Country], DimPharmacy[Region] )
+			    ),
+			    [Revenue per Active Day], , DESC, DENSE
+			)
+		formatString: 0
+		lineageTag: 61697052-0a2d-4c6b-a24c-f4f8d6ea8865
+
+	measure 'Avg Margin % (All Products)' =
+			
+			CALCULATE( [Margin %], ALLSELECTED(DimProduct) )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d6d7ef94-f955-49c5-b2a8-872be09d435c
+
+	measure 'Avg Units per Product' =
+			
+			VAR _Products = CALCULATETABLE( VALUES(DimProduct[ProductID]), ALLSELECTED(DimProduct) )
+			RETURN
+			    DIVIDE( CALCULATE( [Units Sold], ALLSELECTED(DimProduct) ), COUNTROWS( _Products ) )
+		formatString: #,0
+		lineageTag: 1cb1dc97-99e6-4c37-aa65-4d5afc24c469
+
+	measure 'Product Segment' =
+			
+			VAR _HighVol = [Units Sold] >= [Avg Units per Product]
+			VAR _HighMar = [Margin %]   >= [Avg Margin % (All Products)]
+			RETURN
+			    SWITCH( TRUE(),
+			        _HighVol      &&      _HighMar, "1 - Star (high volume, high margin)",
+			        _HighVol      && NOT( _HighMar ), "2 - Volume driver (high volume, low margin)",
+			        NOT( _HighVol ) &&    _HighMar, "3 - Niche premium (low volume, high margin)",
+			        "4 - Low priority (low volume, low margin)" )
+		lineageTag: 58d15767-fe7c-457c-a625-b68cedb95323
+
+	measure 'Revenue (Promo)' =
+			
+			CALCULATE( [Total Revenue], FactSales[PromoFlag] = "Yes" )
+		formatString: #,0
+		lineageTag: 75cab306-16f9-471f-a10c-e2cde19a0466
+
+	measure 'Revenue (Non-Promo)' =
+			
+			CALCULATE( [Total Revenue], FactSales[PromoFlag] = "No" )
+		formatString: #,0
+		lineageTag: 53782fa4-eaa8-4cd9-8f21-f3c56fee2a19
+
+	measure 'Units (Promo)' =
+			
+			CALCULATE( [Units Sold], FactSales[PromoFlag] = "Yes" )
+		formatString: #,0
+		lineageTag: 40f25b16-4d14-4868-8f03-352c2f7870e6
+
+	measure 'Units (Non-Promo)' =
+			
+			CALCULATE( [Units Sold], FactSales[PromoFlag] = "No" )
+		formatString: #,0
+		lineageTag: f1e964a4-3166-4a0c-864a-71a2a5b1aaab
+
+	measure 'Promo Revenue Share %' =
+			
+			DIVIDE( [Revenue (Promo)], [Total Revenue] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: d1982a78-7ca1-47a2-84ab-3f1d23e24608
+
+	measure 'Promo Units Share %' =
+			
+			DIVIDE( [Units (Promo)], [Units Sold] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: bf91354f-9bae-4949-aaa8-a30a6fb105af
+
+	measure 'Margin % (Promo)' =
+			
+			CALCULATE( [Margin %], FactSales[PromoFlag] = "Yes" )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3bc5a409-bc53-4e6c-8517-07000d675140
+
+	measure 'Margin % (Non-Promo)' =
+			
+			CALCULATE( [Margin %], FactSales[PromoFlag] = "No" )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: fdc79859-d592-44b5-aac7-baed75fbdfdd
+
+	measure 'Promo Margin Gap (pp)' =
+			
+			( [Margin % (Promo)] - [Margin % (Non-Promo)] ) * 100
+		formatString: 0.00" pp"
+		lineageTag: a46516e2-6d81-4686-a164-90cd100d93bf
+
+	measure 'Avg Price (Promo)' =
+			
+			CALCULATE( [Avg Unit Price], FactSales[PromoFlag] = "Yes" )
+		formatString: 0.00
+		lineageTag: faae1fc4-d312-4965-a9d1-5681c168bea9
+
+	measure 'Avg Price (Non-Promo)' =
+			
+			CALCULATE( [Avg Unit Price], FactSales[PromoFlag] = "No" )
+		formatString: 0.00
+		lineageTag: 187e0fe9-3779-4dfb-b9cc-2ce785acf500
+
+	measure 'Promo Discount Depth %' =
+			
+			1 - DIVIDE( [Avg Price (Promo)], [Avg Price (Non-Promo)] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 08f97bf2-8591-41b8-b026-a362801e5003
+
+	measure 'Promo Units Uplift %' =
+			
+			VAR _PromoDays    = CALCULATE( DISTINCTCOUNT(FactSales[DateKey]), FactSales[PromoFlag] = "Yes" )
+			VAR _NonPromoDays = CALCULATE( DISTINCTCOUNT(FactSales[DateKey]), FactSales[PromoFlag] = "No" )
+			VAR _PromoRate    = DIVIDE( [Units (Promo)],     _PromoDays )
+			VAR _BaseRate     = DIVIDE( [Units (Non-Promo)], _NonPromoDays )
+			RETURN
+			    DIVIDE( _PromoRate - _BaseRate, _BaseRate )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 8521f7e7-b501-4324-9d23-14d4e5fd1c93
+
+	measure 'Margin Foregone' =
+			
+			VAR _PromoRev  = [Revenue (Promo)]
+			VAR _BaseRate  = [Margin % (Non-Promo)]
+			VAR _PromoMar  = CALCULATE( [Total Margin], FactSales[PromoFlag] = "Yes" )
+			RETURN
+			    _PromoRev * _BaseRate - _PromoMar
+		formatString: #,0
+		lineageTag: 9c0cba7f-a27c-4863-bea1-e32446553225
+
+	measure 'Revenue Growth %' =
+			
+			VAR _MaxYear = MAX( DimDate[Year] )
+			VAR _Cur =
+			    CALCULATE( [Total Revenue], DimDate[Year] = _MaxYear, REMOVEFILTERS(DimDate) )
+			VAR _Prior =
+			    CALCULATE( [Total Revenue], DimDate[Year] = _MaxYear - 1, REMOVEFILTERS(DimDate) )
+			RETURN
+			    DIVIDE( _Cur - _Prior, _Prior )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 3d9c1f2a-77b4-4c65-9e10-5a4c8de21b77
+
+	measure 'Store Longitude' =
+			
+			AVERAGE( DimPharmacy[Longitude] )
+		formatString: 0.00
+		lineageTag: 9f2b41ce-5d80-4a17-91b3-6c0e77aa1d24
+
+	measure 'Store Latitude' =
+			
+			AVERAGE( DimPharmacy[Latitude] )
+		formatString: 0.00
+		lineageTag: c41d8a6b-2f39-4e0a-bb57-18d9e3f42a05
+
+	measure 'Store Country' =
+			
+			SELECTEDVALUE( DimPharmacy[Country] )
+		lineageTag: 1a7f3e52-9c04-4b6d-8f21-73ab5c0e9d18
+
+	measure 'Store City' =
+			
+			SELECTEDVALUE( DimPharmacy[City] )
+		lineageTag: 6e2c98b1-40da-47f3-95ec-0b8f1d6a34c7
 
 	column Dummy
 		dataType: string

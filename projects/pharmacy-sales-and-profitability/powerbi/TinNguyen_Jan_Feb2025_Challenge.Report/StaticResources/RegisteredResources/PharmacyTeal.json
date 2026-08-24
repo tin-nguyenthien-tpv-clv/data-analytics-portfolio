@@ -1,0 +1,299 @@
+{
+  "name": "Pharmacy Teal",
+  "dataColors": [
+    "#00897B",
+    "#EB6834",
+    "#2A78D6",
+    "#EDA100",
+    "#E34948",
+    "#4A3AA7",
+    "#E87BA4",
+    "#008300"
+  ],
+  "foreground": "#05302C",
+  "foregroundNeutralSecondary": "#0F655C",
+  "foregroundNeutralTertiary": "#6FC5BA",
+  "background": "#FFFFFF",
+  "backgroundLight": "#DCF2EF",
+  "backgroundNeutral": "#A8DED6",
+  "tableAccent": "#00897B",
+  "good": "#00897B",
+  "neutral": "#EDA100",
+  "bad": "#E34948",
+  "maximum": "#05302C",
+  "minimum": "#DCF2EF",
+  "textClasses": {
+    "callout": {
+      "color": "#05302C",
+      "fontSize": 26,
+      "fontFace": "Segoe UI Semibold"
+    },
+    "title": {
+      "color": "#05302C",
+      "fontSize": 11,
+      "fontFace": "Segoe UI Semibold"
+    },
+    "header": {
+      "color": "#0A4A44",
+      "fontSize": 10,
+      "fontFace": "Segoe UI Semibold"
+    },
+    "label": {
+      "color": "#0F655C",
+      "fontSize": 9,
+      "fontFace": "Segoe UI"
+    }
+  },
+  "visualStyles": {
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F4FAF9"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#DCF2EF"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#A8DED6"
+              }
+            },
+            "radius": 8
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontColor": {
+              "solid": {
+                "color": "#05302C"
+              }
+            },
+            "background": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "alignment": "left",
+            "fontSize": 11
+          }
+        ],
+        "labels": [
+          {
+            "color": {
+              "solid": {
+                "color": "#0F655C"
+              }
+            },
+            "fontSize": 9
+          }
+        ],
+        "categoryAxis": [
+          {
+            "showAxisTitle": false,
+            "labelColor": {
+              "solid": {
+                "color": "#0F655C"
+              }
+            },
+            "fontSize": 9,
+            "gridlineShow": false
+          }
+        ],
+        "valueAxis": [
+          {
+            "showAxisTitle": false,
+            "labelColor": {
+              "solid": {
+                "color": "#0F655C"
+              }
+            },
+            "fontSize": 9,
+            "gridlineColor": {
+              "solid": {
+                "color": "#DCF2EF"
+              }
+            },
+            "gridlineThickness": 1
+          }
+        ],
+        "legend": [
+          {
+            "showTitle": false,
+            "labelColor": {
+              "solid": {
+                "color": "#0F655C"
+              }
+            },
+            "fontSize": 9,
+            "position": "TopCenter"
+          }
+        ]
+      }
+    },
+    "cardVisual": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#00897B"
+              }
+            },
+            "radius": 8
+          }
+        ],
+        "calloutValue": [
+          {
+            "fontSize": 24,
+            "fontColor": {
+              "solid": {
+                "color": "#05302C"
+              }
+            },
+            "fontFamily": "Segoe UI Semibold"
+          }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#6FC5BA"
+              }
+            },
+            "radius": 8
+          }
+        ]
+      }
+    },
+    "shape": {
+      "*": {
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "fill": [
+          {
+            "show": true,
+            "fillColor": {
+              "solid": {
+                "color": "#05302C"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "textbox": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ]
+      }
+    },
+    "pageNavigator": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "fill": [
+          {
+            "show": true,
+            "fillColor": {
+              "solid": {
+                "color": "#0A4A44"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

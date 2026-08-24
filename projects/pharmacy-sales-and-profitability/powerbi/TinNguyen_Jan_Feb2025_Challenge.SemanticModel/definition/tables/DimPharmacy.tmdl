@@ -20,6 +20,7 @@ table DimPharmacy
 	column Country
 		dataType: string
 		lineageTag: 96e0cb71-e7e9-426a-8040-4e60e6bea54c
+		dataCategory: Country
 		summarizeBy: none
 		sourceColumn: Country
 
@@ -28,6 +29,7 @@ table DimPharmacy
 	column Region
 		dataType: string
 		lineageTag: d44c1a13-fee1-4327-8e14-d8e918308393
+		dataCategory: StateOrProvince
 		summarizeBy: none
 		sourceColumn: Region
 
@@ -36,6 +38,7 @@ table DimPharmacy
 	column City
 		dataType: string
 		lineageTag: 24f9c4cc-0814-4e57-b7b3-952c01dfb149
+		dataCategory: City
 		summarizeBy: none
 		sourceColumn: City
 
@@ -49,22 +52,6 @@ table DimPharmacy
 
 		annotation SummarizationSetBy = Automatic
 
-	column OpenDate
-		dataType: dateTime
-		formatString: Long Date
-		lineageTag: 0ec25a2a-e525-42a5-a170-3994d9e21557
-		summarizeBy: none
-		sourceColumn: OpenDate
-
-		variation Variation
-			isDefault
-			relationship: 49adf96b-b23c-4aa3-bf13-8dc641db756d
-			defaultHierarchy: LocalDateTable_abc649cb-1283-4113-a29f-b631b03ef4de.'Date Hierarchy'
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
-
 	column StoreSizeBand
 		dataType: string
 		lineageTag: 51c372ff-f44f-4937-bde7-5a53a0a01a30
@@ -74,20 +61,87 @@ table DimPharmacy
 		annotation SummarizationSetBy = Automatic
 
 	column Latitude
-		dataType: string
+		dataType: double
 		lineageTag: 4a03c4b5-e887-4de2-ae67-03016461465a
+		dataCategory: Latitude
 		summarizeBy: none
 		sourceColumn: Latitude
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Longitude
-		dataType: string
+		dataType: double
 		lineageTag: e17b6f7d-a095-40c1-8821-a2e601cbcc77
+		dataCategory: Longitude
 		summarizeBy: none
 		sourceColumn: Longitude
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Store Cohort' =
+			
+			IF( DimPharmacy[OpenDate] < DATE(2024,1,1), "Established", "Opened in window" )
+		lineageTag: f34558f8-fc5f-49e1-aee7-d86a494c4c65
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column OpenDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e96d4aba-4740-4c7b-904b-fed22769e5c6
+		summarizeBy: none
+		sourceColumn: OpenDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Pharmacy Name' =
+			
+			LEFT(
+			    DimPharmacy[PharmacyName],
+			    SEARCH( " #", DimPharmacy[PharmacyName], 1, LEN( DimPharmacy[PharmacyName] ) + 1 ) - 1
+			)
+		lineageTag: 13f37a7d-f4e4-4768-a498-3f54fa2d3ecb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Latitude Band' =
+			
+			SWITCH( TRUE(),
+			    DimPharmacy[Latitude] < 44, "37-44 N (South)",
+			    DimPharmacy[Latitude] < 48, "44-48 N",
+			    DimPharmacy[Latitude] < 52, "48-52 N",
+			    "52-56 N (North)" )
+		lineageTag: 7b0e5c9a-4d21-4f88-a6c3-2e51b0d7f913
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy Geography
+		lineageTag: 00634e7c-21c1-4911-be7e-ebe841170c60
+
+		level Country
+			lineageTag: 2f6107a5-4224-434f-80d2-51baebf7ce8f
+			column: Country
+
+		level Region
+			lineageTag: f406d724-97d6-46e1-b74b-4b22b76b3e3d
+			column: Region
+
+		level City
+			lineageTag: 9a9a205f-5803-45b7-9e74-d6a1308142ad
+			column: City
+
+		level Pharmacy
+			lineageTag: 7cf7e280-1067-4066-9ad7-2b88a2589369
+			column: PharmacyName
 
 	partition DimPharmacy = m
 		mode: import
@@ -95,7 +149,7 @@ table DimPharmacy
 				let
 				    Source = Excel.Workbook(Web.Contents("https://raw.githubusercontent.com/nguyenthientinpotato/data-analytics-portfolio/main/projects/pharmacy-sales-and-profitability/data/Pharmacy_Data_Challenge_Dataset.xlsx"), null, true),
 				    T_DimPharmacy_Table = Source{[Item="T_DimPharmacy",Kind="Table"]}[Data],
-				    #"Changed Type" = Table.TransformColumnTypes(T_DimPharmacy_Table,{{"PharmacyID", type text}, {"PharmacyName", type text}, {"Country", type text}, {"Region", type text}, {"City", type text}, {"PharmacyType", type text}, {"OpenDate", type date}, {"StoreSizeBand", type text}, {"Latitude", type text}, {"Longitude", type text}})
+				    #"Changed Type" = Table.TransformColumnTypes(T_DimPharmacy_Table,{{"PharmacyID", type text}, {"PharmacyName", type text}, {"Country", type text}, {"Region", type text}, {"City", type text}, {"PharmacyType", type text}, {"OpenDate", type date}, {"StoreSizeBand", type text}, {"Latitude", type number}, {"Longitude", type number}})
 				in
 				    #"Changed Type"
 

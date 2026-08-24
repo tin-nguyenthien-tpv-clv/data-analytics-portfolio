@@ -6,9 +6,9 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation __PBI_TimeIntelligenceEnabled = 1
+annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["DimDate","DimPharmacy","DimProduct","FactSales","_Measures"]
+annotation PBI_QueryOrder = ["DimDate","DimPharmacy","DimProduct","FactSales","_Measures","_Format_Measures"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -16,11 +16,8 @@ ref table DimDate
 ref table DimPharmacy
 ref table DimProduct
 ref table FactSales
-ref table DateTableTemplate_00e9bfca-3047-4343-935f-db46b12cf025
-ref table LocalDateTable_abc649cb-1283-4113-a29f-b631b03ef4de
-ref table LocalDateTable_307894de-2ddd-49b4-ae27-e31440e53499
-ref table LocalDateTable_7ee3b8dc-9de4-4b97-8494-c7ddb567e728
 ref table _Measures
+ref table _Format_Measures
 
 ref cultureInfo en-US
 

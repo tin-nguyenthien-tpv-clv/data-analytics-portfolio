@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "5f73e8cc9dcf21a31595",
   "position": {
-    "x": 0,
-    "y": 259.92672451573321,
+    "x": 727.5,
+    "y": 0,
     "z": 0,
-    "height": 261.36278376720134,
-    "width": 640.48242615479012,
+    "height": 222.5,
+    "width": 552.5,
     "tabOrder": 0
   },
   "visual": {
@@ -122,65 +122,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "708f1467e2d5bb49ba27",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "DimPharmacy"
-              }
-            },
-            "Property": "PharmacyName"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "24a525d78cb395edd736",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Active Pharmacies"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "e7b530bea37818acdb40",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Total Margin"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "c47898726ee68ce638ba",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Total Revenue"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

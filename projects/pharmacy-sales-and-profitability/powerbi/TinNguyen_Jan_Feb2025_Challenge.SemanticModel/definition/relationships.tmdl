@@ -10,18 +10,3 @@ relationship AutoDetected_a60434d4-8aa3-4621-87b2-dfa4a11c4f96
 	fromColumn: FactSales.ProductID
 	toColumn: DimProduct.ProductID
 
-relationship 49adf96b-b23c-4aa3-bf13-8dc641db756d
-	joinOnDateBehavior: datePartOnly
-	fromColumn: DimPharmacy.OpenDate
-	toColumn: LocalDateTable_abc649cb-1283-4113-a29f-b631b03ef4de.Date
-
-relationship 99b4b0fd-36ed-4581-8917-afd2beb4b3d8
-	joinOnDateBehavior: datePartOnly
-	fromColumn: DimProduct.LaunchDate
-	toColumn: LocalDateTable_307894de-2ddd-49b4-ae27-e31440e53499.Date
-
-relationship 23738011-98ec-42d3-b428-7897f2d485c8
-	joinOnDateBehavior: datePartOnly
-	fromColumn: DimProduct.DiscontinuedDate
-	toColumn: LocalDateTable_7ee3b8dc-9de4-4b97-8494-c7ddb567e728.Date
-

@@ -4,14 +4,14 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 31.032680699296407,
-        "y": 45.038658208696233
+        "x": 52.794871209672586,
+        "y": 1.6760277073994398
       },
       "nodes": [
         {
           "location": {
-            "x": 899.43987238698344,
-            "y": 420.53275512965251
+            "x": 963.547930284443,
+            "y": 48.454615175769504
           },
           "nodeIndex": "_Measures",
           "nodeLineageTag": "4fec034d-016a-4580-8e07-ef9690678927",
@@ -35,10 +35,11 @@
         },
         {
           "location": {
-            "x": 670.8176749854166,
+            "x": 656.99044681145472,
             "y": 1.2570207430874412
           },
           "nodeIndex": "DimPharmacy",
+          "nodeLineageTag": "546e85d9-98f9-4eb6-b97b-5ac46efe2877",
           "size": {
             "height": 300,
             "width": 234
@@ -65,6 +66,18 @@
           "nodeIndex": "FactSales",
           "size": {
             "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1172.4075154226941,
+            "y": 420.53275512965251
+          },
+          "nodeIndex": "_Format_Measures",
+          "size": {
+            "height": 104,
             "width": 234
           },
           "zIndex": 0

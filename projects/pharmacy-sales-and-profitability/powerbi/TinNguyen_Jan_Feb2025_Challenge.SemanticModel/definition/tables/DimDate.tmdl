@@ -55,6 +55,9 @@ table DimDate
 		lineageTag: afb65c8d-96b5-4d58-884c-7c145a108959
 		summarizeBy: none
 		sourceColumn: MonthName
+		sortByColumn: MonthNumber
+
+		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 
@@ -66,15 +69,61 @@ table DimDate
 
 		annotation SummarizationSetBy = Automatic
 
+	column DayOfWeek
+		dataType: int64
+		formatString: 0
+		lineageTag: 59d23a26-fa95-4acc-9773-d50ecdbc98dc
+		summarizeBy: none
+		sourceColumn: DayOfWeek
+
+		annotation SummarizationSetBy = User
+
+	column DayName
+		dataType: string
+		lineageTag: 8fe35b91-62e4-4d58-a5e3-f659e04c7742
+		summarizeBy: none
+		sourceColumn: DayName
+		sortByColumn: DayOfWeek
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayType
+		dataType: string
+		lineageTag: 855c96e9-aa97-4bb9-8cd5-4b733dc7ac21
+		summarizeBy: none
+		sourceColumn: DayType
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy Calendar
+		lineageTag: 4b14ba0e-d035-4cd9-bcf7-efdf401759ae
+
+		level Year
+			lineageTag: 9ea384a6-4793-47da-976b-6e6ebed4f0b3
+			column: Year
+
+		level Quarter
+			lineageTag: b41c2c9f-70b3-4a48-abc2-7236ae61ca3d
+			column: Quarter
+
+		level Month
+			lineageTag: 1b7bc302-1833-47ed-94c5-e1b2eacb0163
+			column: MonthName
+
 	partition DimDate = m
 		mode: import
 		source =
 				let
 				    Source = Excel.Workbook(Web.Contents("https://raw.githubusercontent.com/nguyenthientinpotato/data-analytics-portfolio/main/projects/pharmacy-sales-and-profitability/data/Pharmacy_Data_Challenge_Dataset.xlsx"), null, true),
 				    T_DimDate_Table = Source{[Item="T_DimDate",Kind="Table"]}[Data],
-				    #"Changed Type" = Table.TransformColumnTypes(T_DimDate_Table,{{"Date", type date}, {"DateKey", Int64.Type}, {"Year", Int64.Type}, {"Quarter", Int64.Type}, {"MonthNumber", Int64.Type}, {"MonthName", type text}, {"YearMonth", type text}})
+				    #"Changed Type" = Table.TransformColumnTypes(T_DimDate_Table,{{"Date", type date}, {"DateKey", Int64.Type}, {"Year", Int64.Type}, {"Quarter", Int64.Type}, {"MonthNumber", Int64.Type}, {"MonthName", type text}, {"YearMonth", type text}}),
+				    #"Added DayOfWeek" = Table.AddColumn(#"Changed Type", "DayOfWeek", each Date.DayOfWeek([Date], Day.Monday), Int64.Type),
+				    #"Added DayName" = Table.AddColumn(#"Added DayOfWeek", "DayName", each Date.DayOfWeekName([Date], "en-US"), type text),
+				    #"Added DayType" = Table.AddColumn(#"Added DayName", "DayType", each if [DayOfWeek] >= 5 then "Weekend" else "Weekday", type text)
 				in
-				    #"Changed Type"
+				    #"Added DayType"
 
 	annotation PBI_ResultType = Table
 

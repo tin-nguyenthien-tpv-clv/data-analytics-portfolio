@@ -76,11 +76,6 @@ table DimProduct
 		summarizeBy: none
 		sourceColumn: LaunchDate
 
-		variation Variation
-			isDefault
-			relationship: 99b4b0fd-36ed-4581-8917-afd2beb4b3d8
-			defaultHierarchy: LocalDateTable_307894de-2ddd-49b4-ae27-e31440e53499.'Date Hierarchy'
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
@@ -100,14 +95,24 @@ table DimProduct
 		summarizeBy: none
 		sourceColumn: DiscontinuedDate
 
-		variation Variation
-			isDefault
-			relationship: 23738011-98ec-42d3-b428-7897f2d485c8
-			defaultHierarchy: LocalDateTable_7ee3b8dc-9de4-4b97-8494-c7ddb567e728.'Date Hierarchy'
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
+
+	hierarchy Product
+		lineageTag: 12ea2560-2786-4721-a7b0-333fb6b365ac
+
+		level Category
+			lineageTag: abed334d-0c4e-46c1-992d-7c32c54bd245
+			column: Category
+
+		level Brand
+			lineageTag: 1a9ff025-7039-4647-9cf8-65e54bfc7e6d
+			column: Brand
+
+		level Product
+			lineageTag: 47f6c815-f171-46fd-9f88-52468ec44e04
+			column: ProductName
 
 	partition DimProduct = m
 		mode: import
