@@ -1,0 +1,82 @@
+table DimDate
+	lineageTag: 6a86cedc-a1fe-498e-bdf0-160ccd975a29
+	dataCategory: Time
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 68a01acd-9364-4eb9-b997-7170e285539d
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 8aba0b51-9c48-43ba-ad7e-4f0cfb530bec
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: ebcb6388-9749-4562-ac1c-307c5b5e4ea8
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: e04a261d-a93c-4ddf-b63c-3c3b3f884a15
+		summarizeBy: sum
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 40cd0e78-bf90-4d91-9018-290309e1e040
+		summarizeBy: sum
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: afb65c8d-96b5-4d58-884c-7c145a108959
+		summarizeBy: none
+		sourceColumn: MonthName
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: string
+		lineageTag: e0743335-54e2-4dac-9816-af126103d594
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://raw.githubusercontent.com/nguyenthientinpotato/data-analytics-portfolio/main/projects/pharmacy-sales-and-profitability/data/Pharmacy_Data_Challenge_Dataset.xlsx"), null, true),
+				    T_DimDate_Table = Source{[Item="T_DimDate",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(T_DimDate_Table,{{"Date", type date}, {"DateKey", Int64.Type}, {"Year", Int64.Type}, {"Quarter", Int64.Type}, {"MonthNumber", Int64.Type}, {"MonthName", type text}, {"YearMonth", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

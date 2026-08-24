@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "TinNguyen_Jan_Feb2025_Challenge"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c485d057-ea61-412a-a4e6-1f40f5050a1c"
+  }
+}

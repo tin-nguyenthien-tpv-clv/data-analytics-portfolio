@@ -1,0 +1,105 @@
+table DimPharmacy
+	lineageTag: 546e85d9-98f9-4eb6-b97b-5ac46efe2877
+
+	column PharmacyID
+		dataType: string
+		lineageTag: 7b6bc255-6a66-42a7-8b64-c88169a6e030
+		summarizeBy: none
+		sourceColumn: PharmacyID
+
+		annotation SummarizationSetBy = Automatic
+
+	column PharmacyName
+		dataType: string
+		lineageTag: a66f8001-aec8-4177-a0f1-c750f9621a22
+		summarizeBy: none
+		sourceColumn: PharmacyName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 96e0cb71-e7e9-426a-8040-4e60e6bea54c
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: d44c1a13-fee1-4327-8e14-d8e918308393
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 24f9c4cc-0814-4e57-b7b3-952c01dfb149
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column PharmacyType
+		dataType: string
+		lineageTag: e467eba1-8872-4b72-beb3-a19be70e2ed5
+		summarizeBy: none
+		sourceColumn: PharmacyType
+
+		annotation SummarizationSetBy = Automatic
+
+	column OpenDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0ec25a2a-e525-42a5-a170-3994d9e21557
+		summarizeBy: none
+		sourceColumn: OpenDate
+
+		variation Variation
+			isDefault
+			relationship: 49adf96b-b23c-4aa3-bf13-8dc641db756d
+			defaultHierarchy: LocalDateTable_abc649cb-1283-4113-a29f-b631b03ef4de.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column StoreSizeBand
+		dataType: string
+		lineageTag: 51c372ff-f44f-4937-bde7-5a53a0a01a30
+		summarizeBy: none
+		sourceColumn: StoreSizeBand
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: string
+		lineageTag: 4a03c4b5-e887-4de2-ae67-03016461465a
+		summarizeBy: none
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column Longitude
+		dataType: string
+		lineageTag: e17b6f7d-a095-40c1-8821-a2e601cbcc77
+		summarizeBy: none
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimPharmacy = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://raw.githubusercontent.com/nguyenthientinpotato/data-analytics-portfolio/main/projects/pharmacy-sales-and-profitability/data/Pharmacy_Data_Challenge_Dataset.xlsx"), null, true),
+				    T_DimPharmacy_Table = Source{[Item="T_DimPharmacy",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(T_DimPharmacy_Table,{{"PharmacyID", type text}, {"PharmacyName", type text}, {"Country", type text}, {"Region", type text}, {"City", type text}, {"PharmacyType", type text}, {"OpenDate", type date}, {"StoreSizeBand", type text}, {"Latitude", type text}, {"Longitude", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

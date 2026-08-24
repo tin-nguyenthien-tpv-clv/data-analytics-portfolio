@@ -1,0 +1,92 @@
+table _Measures
+	lineageTag: 4fec034d-016a-4580-8e07-ef9690678927
+
+	measure 'Total Revenue' = SUM(FactSales[RevenueEUR])
+		formatString: 0.0
+		lineageTag: 6e9aac75-0550-40c2-b186-b75b4096feb9
+
+	measure 'Total Margin' = SUM(FactSales[MarginEUR])
+		formatString: 0.0
+		lineageTag: 22c8d864-fdce-440a-8251-37470519694b
+
+	measure 'Units Sold' = SUM(FactSales[UnitsSold])
+		formatString: 0
+		lineageTag: 7cd4f90e-bef5-4394-b022-33453d192adb
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Margin %' = DIVIDE([Total Margin], [Total Revenue])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d06a21c5-d08c-4a76-b6cd-98d6b3d4c839
+
+	measure 'Active Pharmacies' = DISTINCTCOUNT(FactSales[PharmacyID])
+		formatString: 0
+		lineageTag: 0301d9e1-6da1-440c-845f-e0e1c65e4f5d
+
+	measure 'Revenue per Pharmacy' = DIVIDE([Total Revenue], [Active Pharmacies])
+		formatString: 0.0
+		lineageTag: a9b9cb23-3c08-48b5-b7ff-43df3ac339d2
+
+	measure 'Avg Unit Price' = DIVIDE([Total Revenue], [Units Sold])
+		formatString: 0.00
+		lineageTag: 2cdc9740-6f64-4d5d-aa24-87dc5c7c427e
+
+	measure 'Margin % vs Group (pp)' =
+			
+			VAR _Group =
+			    CALCULATE([Margin %], ALLSELECTED() )
+			RETURN
+			    [Margin %] - _Group
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ae99ac7e-1407-4bf1-a8d4-3f9a04bf3569
+
+	measure 'Revenue YoY %' =
+			
+			VAR _Prior =
+			    CALCULATE( [Total Revenue], SAMEPERIODLASTYEAR(DimDate[Date]) )
+			RETURN
+			    DIVIDE( [Total Revenue] - _Prior, _Prior )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: bbffd7c6-3644-408b-b88e-fd36cafd8171
+
+	measure 'Margin % YoY (pp)' =
+			
+			VAR _Prior =
+			    CALCULATE( [Margin %], SAMEPERIODLASTYEAR(DimDate[Date]) )
+			RETURN
+			    [Margin %] - _Prior
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 8ea74979-874b-4669-9884-4839c69a5d23
+
+	measure 'Seasonality Index' =
+			
+			VAR _ThisMonthAvg =
+			    AVERAGEX( VALUES(DimDate[YearMonth]), [Total Revenue] )
+			VAR _AllMonthAvg =
+			    CALCULATE(
+			        AVERAGEX( VALUES(DimDate[YearMonth]), [Total Revenue] ),
+			        ALLSELECTED(DimDate)
+			    )
+			RETURN
+			    DIVIDE( _ThisMonthAvg, _AllMonthAvg )
+		formatString: 0.00
+		lineageTag: 212a1527-9a7a-4097-b407-87b1577f0c2e
+
+	column Dummy
+		dataType: string
+		lineageTag: 47081a47-4f09-47b3-b02b-f1c4eac53ad0
+		summarizeBy: none
+		sourceColumn: Dummy
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlSKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Dummy = _t])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

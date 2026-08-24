@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "TinNguyen_Jan_Feb2025_Challenge"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9a06d20e-bd20-48d6-a4f1-90cfaaea5c00"
+  }
+}

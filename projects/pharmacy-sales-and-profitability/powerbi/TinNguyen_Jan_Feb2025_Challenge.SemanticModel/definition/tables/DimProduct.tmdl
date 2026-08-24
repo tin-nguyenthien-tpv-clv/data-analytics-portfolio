@@ -1,0 +1,125 @@
+table DimProduct
+	lineageTag: ba733917-48d8-4b7d-bf00-e60e1762a409
+
+	column ProductID
+		dataType: string
+		lineageTag: 226c1004-c2d6-4a9e-9fbf-e9cb2fd24a35
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: e25cc1b0-1399-4e49-9173-ea6a837c6142
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 5eb9ffd5-a347-427f-bbb6-f135ae8e1e82
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Brand
+		dataType: string
+		lineageTag: d8a24605-1d80-4e19-9f04-cf903dcf4d68
+		summarizeBy: none
+		sourceColumn: Brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsGeneric
+		dataType: string
+		lineageTag: db100c67-aa6c-45ff-8e9f-956e5bf0e850
+		summarizeBy: none
+		sourceColumn: IsGeneric
+
+		annotation SummarizationSetBy = Automatic
+
+	column PackSize
+		dataType: string
+		lineageTag: 464bc2cc-81df-4925-9844-b1a491e636c9
+		summarizeBy: none
+		sourceColumn: PackSize
+
+		annotation SummarizationSetBy = Automatic
+
+	column ListPriceEUR
+		dataType: double
+		lineageTag: d180203c-5f9d-405e-80bb-64c06f50d2d3
+		summarizeBy: sum
+		sourceColumn: ListPriceEUR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column StandardCostEUR
+		dataType: double
+		lineageTag: cc8454b2-9497-4988-aa72-82e5aef67e5e
+		summarizeBy: sum
+		sourceColumn: StandardCostEUR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LaunchDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6e0e4d8f-cd24-4220-86be-48dc84c49042
+		summarizeBy: none
+		sourceColumn: LaunchDate
+
+		variation Variation
+			isDefault
+			relationship: 99b4b0fd-36ed-4581-8917-afd2beb4b3d8
+			defaultHierarchy: LocalDateTable_307894de-2ddd-49b4-ae27-e31440e53499.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column IsDiscontinued
+		dataType: string
+		lineageTag: f2802063-8473-49db-b254-8ab6784850d0
+		summarizeBy: none
+		sourceColumn: IsDiscontinued
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiscontinuedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: af814f90-fccc-4f4a-b600-e6fe95b4ff3f
+		summarizeBy: none
+		sourceColumn: DiscontinuedDate
+
+		variation Variation
+			isDefault
+			relationship: 23738011-98ec-42d3-b428-7897f2d485c8
+			defaultHierarchy: LocalDateTable_7ee3b8dc-9de4-4b97-8494-c7ddb567e728.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition DimProduct = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://raw.githubusercontent.com/nguyenthientinpotato/data-analytics-portfolio/main/projects/pharmacy-sales-and-profitability/data/Pharmacy_Data_Challenge_Dataset.xlsx"), null, true),
+				    T_DimProduct_Table = Source{[Item="T_DimProduct",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(T_DimProduct_Table,{{"ProductID", type text}, {"ProductName", type text}, {"Category", type text}, {"Brand", type text}, {"IsGeneric", type text}, {"PackSize", type text}, {"ListPriceEUR", type number}, {"StandardCostEUR", type number}, {"LaunchDate", type date}, {"DiscontinuedDate", type date}, {"IsDiscontinued", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

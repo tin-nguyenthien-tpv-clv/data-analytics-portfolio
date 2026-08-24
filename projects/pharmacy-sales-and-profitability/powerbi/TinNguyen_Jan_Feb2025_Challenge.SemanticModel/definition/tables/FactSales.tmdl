@@ -1,0 +1,97 @@
+table FactSales
+	lineageTag: 5b174143-c363-4b96-a4f5-dd0b5c11b09f
+
+	column SalesID
+		dataType: string
+		lineageTag: c97e8305-d5ec-4712-9954-7d7d9870aca0
+		summarizeBy: none
+		sourceColumn: SalesID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 578694df-5f80-4c6d-9f19-5ab32f562775
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PharmacyID
+		dataType: string
+		lineageTag: 628cec8c-da41-4636-a827-ebe660f0b7ec
+		summarizeBy: none
+		sourceColumn: PharmacyID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductID
+		dataType: string
+		lineageTag: 5e2f6062-c329-4903-bd65-1e0bea0bfa33
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitsSold
+		dataType: int64
+		formatString: 0
+		lineageTag: 35bed828-301b-4ede-9b60-ca0fc54a99e1
+		summarizeBy: sum
+		sourceColumn: UnitsSold
+
+		annotation SummarizationSetBy = Automatic
+
+	column RevenueEUR
+		dataType: double
+		lineageTag: a5317bcd-4324-4926-97fb-a9a24d5e4137
+		summarizeBy: sum
+		sourceColumn: RevenueEUR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CostEUR
+		dataType: double
+		lineageTag: 1b4c68ed-f4bc-41e9-8c4a-a074fc7450ea
+		summarizeBy: sum
+		sourceColumn: CostEUR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MarginEUR
+		dataType: double
+		lineageTag: 99c5029c-0738-46b1-ac41-c5fbf730c1ef
+		summarizeBy: sum
+		sourceColumn: MarginEUR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PromoFlag
+		dataType: string
+		lineageTag: 869a5ec8-cf65-4bcd-96c9-3caccea7006a
+		summarizeBy: none
+		sourceColumn: PromoFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactSales = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://raw.githubusercontent.com/nguyenthientinpotato/data-analytics-portfolio/main/projects/pharmacy-sales-and-profitability/data/Pharmacy_Data_Challenge_Dataset.xlsx"), null, true),
+				    T_FactSales_Table = Source{[Item="T_FactSales",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(T_FactSales_Table,{{"SalesID", type text}, {"DateKey", Int64.Type}, {"PharmacyID", type text}, {"ProductID", type text}, {"UnitsSold", Int64.Type}, {"RevenueEUR", type number}, {"CostEUR", type number}, {"MarginEUR", type number}, {"PromoFlag", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
