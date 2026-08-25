@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "ebe048cf88e30cf39e7e",
   "position": {
     "x": 236.30898333142116,
     "y": 455.16332584858964,
-    "z": 8000,
+    "z": 5000,
     "height": 248.39296543359612,
     "width": 499.47126022323113,
-    "tabOrder": 8000
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "lineClusteredColumnComboChart",
@@ -98,7 +98,34 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Promo revenue over time and its share'"
+                  "Value": "'Promo revenue over time'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Columns = revenue split, line = promo share of revenue'"
                 }
               }
             },

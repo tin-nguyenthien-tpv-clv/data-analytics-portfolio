@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "2aeb7b91a6ef8690d6ad",
   "position": {
     "x": 236,
@@ -88,9 +88,6 @@
               "active": true
             }
           ]
-        },
-        "PathID": {
-          "projections": []
         },
         "Series": {
           "projections": [
@@ -229,21 +226,21 @@
             "zoom": {
               "expr": {
                 "Literal": {
-                  "Value": "3.66D"
+                  "Value": "2.13D"
                 }
               }
             },
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "47.3460096257792D"
+                  "Value": "46.53056374723488D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "6.783491918644927D"
+                  "Value": "7.514065500000015D"
                 }
               }
             },
@@ -279,7 +276,34 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Where the stores are - bubble = revenue'"
+                  "Value": "'Where the stores are'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Bubble size = revenue, colour = store type'"
                 }
               }
             },

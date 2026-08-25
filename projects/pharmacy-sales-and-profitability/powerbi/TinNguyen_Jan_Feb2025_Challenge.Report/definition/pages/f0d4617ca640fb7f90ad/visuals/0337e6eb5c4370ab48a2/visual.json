@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "0337e6eb5c4370ab48a2",
   "position": {
-    "x": 236,
-    "y": 352,
+    "x": 236.46236418379368,
+    "y": 352.28066500850895,
     "z": 1000,
-    "height": 176,
-    "width": 330,
+    "height": 352.28066500850895,
+    "width": 320.91320853514856,
     "tabOrder": 1000
   },
   "visual": {
@@ -102,6 +102,21 @@
         "isDefaultSort": true
       }
     },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "visualContainerObjects": {
       "title": [
         {
@@ -117,6 +132,33 @@
               "expr": {
                 "Literal": {
                   "Value": "'Revenue by country'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Hover for contribution % and active pharmacies'"
                 }
               }
             },

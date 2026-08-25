@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "299d0dad7b227c17ae65",
   "position": {
-    "x": 255.71428571428572,
-    "y": 532.85714285714289,
+    "x": 956.97946090190339,
+    "y": 0,
     "z": 6000,
-    "height": 187.14285714285717,
-    "width": 701.42857142857144,
+    "height": 295.34967566109776,
+    "width": 323.25673162907549,
     "tabOrder": 6000
   },
   "visual": {
@@ -275,6 +275,11 @@
             ],
             "metadata": "_Measures.Avg Unit Price"
           }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
         }
       ]
     },

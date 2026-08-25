@@ -115,6 +115,23 @@
             "fontSize": 11
           }
         ],
+        "subTitle": [
+          {
+            "show": true,
+            "fontColor": {
+              "solid": {
+                "color": "#0F655C"
+              }
+            },
+            "background": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "alignment": "left",
+            "fontSize": 9
+          }
+        ],
         "labels": [
           {
             "color": {

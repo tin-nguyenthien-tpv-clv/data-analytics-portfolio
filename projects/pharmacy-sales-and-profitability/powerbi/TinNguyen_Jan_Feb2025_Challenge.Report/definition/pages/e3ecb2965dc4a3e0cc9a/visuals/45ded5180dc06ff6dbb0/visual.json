@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "8979a89eb9e233119ea8",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "45ded5180dc06ff6dbb0",
   "position": {
-    "x": 576,
-    "y": 352,
-    "z": 6000,
-    "height": 176,
-    "width": 330,
-    "tabOrder": 6000
+    "x": 255.81467970646264,
+    "y": 516.28053540758822,
+    "z": 7000,
+    "height": 203.48894976650436,
+    "width": 488.37347943961049,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -70,6 +70,21 @@
         "isDefaultSort": true
       }
     },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "visualContainerObjects": {
       "title": [
         {
@@ -84,7 +99,34 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Margin % by country - identical everywhere (28.0%)'"
+                  "Value": "'Margin % by country'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Identical everywhere (28.0%)'"
                 }
               }
             },

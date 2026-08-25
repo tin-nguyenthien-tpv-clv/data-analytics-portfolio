@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "c6d306c3d305f8bba232",
   "position": {
-    "x": 446.25,
+    "x": 446.51289548764385,
     "y": 0,
     "z": 1000,
-    "height": 295,
-    "width": 521.25,
+    "height": 295.34967566109776,
+    "width": 510.46656541425955,
     "tabOrder": 1000
   },
   "visual": {
@@ -61,61 +61,37 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Avg Unit Price"
+                  "Property": "Margin %"
                 }
               },
-              "queryRef": "_Measures.Avg Unit Price",
-              "nativeQueryRef": "Avg Unit Price"
+              "queryRef": "_Measures.Margin %",
+              "nativeQueryRef": "Margin %"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Margin %"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "objects": {
       "values": [
         {
-          "properties": {
-            "backColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "FillRule": {
-                      "Input": {
-                        "SelectRef": {
-                          "ExpressionName": "_Measures.Avg Unit Price"
-                        }
-                      },
-                      "FillRule": {
-                        "linearGradient2": {
-                          "min": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'minColor'"
-                              }
-                            }
-                          },
-                          "max": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'maxColor'"
-                              }
-                            }
-                          },
-                          "nullColoringStrategy": {
-                            "strategy": {
-                              "Literal": {
-                                "Value": "'asZero'"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
+          "properties": {},
           "selector": {
             "data": [
               {
@@ -124,7 +100,27 @@
                 }
               }
             ],
-            "metadata": "_Measures.Avg Unit Price"
+            "metadata": "_Measures.Margin %"
+          }
+        }
+      ],
+      "subTotals": [
+        {
+          "properties": {
+            "columnSubtotals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "rowSubtotals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]

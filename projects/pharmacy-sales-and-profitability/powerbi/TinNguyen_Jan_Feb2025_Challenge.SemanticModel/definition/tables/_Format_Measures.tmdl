@@ -17,7 +17,5 @@ table _Format_Measures
 				in
 				    Source
 
-	changedProperty = Name
-
 	annotation PBI_ResultType = Table
 

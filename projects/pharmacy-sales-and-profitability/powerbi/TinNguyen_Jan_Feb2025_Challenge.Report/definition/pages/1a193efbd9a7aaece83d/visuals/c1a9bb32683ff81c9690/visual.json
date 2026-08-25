@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "c1a9bb32683ff81c9690",
   "position": {
     "x": 829.766771016013,
@@ -144,7 +144,34 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Urban / Suburban / Rural - revenue per store'"
+                  "Value": "'Revenue per store by location type'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Urban, suburban and rural stores compared'"
                 }
               }
             },

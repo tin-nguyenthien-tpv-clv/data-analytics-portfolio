@@ -5,5 +5,44 @@
   "displayOption": "FitToPage",
   "height": 720,
   "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "eeaa5739da0e4e0aaaa5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimProduct"
+              }
+            },
+            "Property": "Category"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "38b59e102f0abed97309",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "c30e4ca62b1001613213",
+        "boundFilter": "eeaa5739da0e4e0aaaa5",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimProduct"
+              }
+            },
+            "Property": "Category"
+          }
+        }
+      }
+    ]
+  },
   "visibility": "HiddenInViewMode"
 }

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "eacf502f4064d4c73ff1",
   "position": {
-    "x": 972.5,
-    "y": 0,
+    "x": 744.18815914607308,
+    "y": 516.28053540758822,
     "z": 5000,
-    "height": 720,
-    "width": 307.5,
+    "height": 203.48894976650436,
+    "width": 536.04803338490581,
     "tabOrder": 5000
   },
   "visual": {
@@ -47,59 +47,84 @@
               },
               "queryRef": "_Measures.Total Revenue",
               "nativeQueryRef": "Total Revenue"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Active Days"
+                }
+              },
+              "queryRef": "_Measures.Active Days",
+              "nativeQueryRef": "Active Days"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Revenue per Active Day"
+                }
+              },
+              "queryRef": "_Measures.Revenue per Active Day",
+              "nativeQueryRef": "Revenue per Active Day"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimPharmacy"
+                        }
+                      },
+                      "Property": "Store Cohort"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Min(DimPharmacy.Store Cohort)",
+              "nativeQueryRef": "First Store Cohort"
             }
           ]
         }
       },
       "sortDefinition": {
-        "isDefaultSort": true
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "DimPharmacy"
+                      }
+                    },
+                    "Property": "Store Cohort"
+                  }
+                },
+                "Function": 3
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "objects": {
       "values": [
         {
-          "properties": {
-            "backColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "FillRule": {
-                      "Input": {
-                        "SelectRef": {
-                          "ExpressionName": "_Measures.Total Revenue"
-                        }
-                      },
-                      "FillRule": {
-                        "linearGradient2": {
-                          "min": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'minColor'"
-                              }
-                            }
-                          },
-                          "max": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'maxColor'"
-                              }
-                            }
-                          },
-                          "nullColoringStrategy": {
-                            "strategy": {
-                              "Literal": {
-                                "Value": "'asZero'"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
+          "properties": {},
           "selector": {
             "data": [
               {
@@ -110,6 +135,41 @@
             ],
             "metadata": "_Measures.Total Revenue"
           }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "85.99985936199661D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Revenue per Active Day"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "65.02323626589623D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Active Days"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
         }
       ]
     },

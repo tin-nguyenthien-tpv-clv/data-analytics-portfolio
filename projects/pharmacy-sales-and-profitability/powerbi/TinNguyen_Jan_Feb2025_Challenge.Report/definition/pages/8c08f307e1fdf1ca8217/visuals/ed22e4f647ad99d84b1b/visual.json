@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "ed22e4f647ad99d84b1b",
   "position": {
     "x": 234.96631865340171,
@@ -29,6 +29,21 @@
               "queryRef": "DimProduct.Category",
               "nativeQueryRef": "Category",
               "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPharmacy"
+                    }
+                  },
+                  "Property": "Country"
+                }
+              },
+              "queryRef": "DimPharmacy.Country",
+              "nativeQueryRef": "Country",
+              "active": false
             }
           ]
         },
@@ -98,7 +113,34 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Revenue vs margin by category - the ranks invert'"
+                  "Value": "'Revenue vs margin by category'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'The two rankings invert'"
                 }
               }
             },

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "093c1a350003bd740c2b",
   "position": {
     "x": 0,
@@ -169,7 +169,7 @@
                 "Property": "Category"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           },
           {
             "field": {
@@ -182,10 +182,9 @@
                 "Property": "PromoFlag"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
-        ],
-        "isDefaultSort": true
+        ]
       }
     },
     "objects": {
@@ -203,6 +202,11 @@
           "selector": {
             "metadata": "_Measures.Margin % vs Group (pp)"
           }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
         }
       ]
     },

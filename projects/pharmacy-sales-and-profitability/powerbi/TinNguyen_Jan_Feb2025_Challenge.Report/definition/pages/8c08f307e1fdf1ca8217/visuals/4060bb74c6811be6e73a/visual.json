@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "4060bb74c6811be6e73a",
   "position": {
     "x": 236.30898333142116,
@@ -169,6 +169,19 @@
       }
     },
     "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
       "zoom": [
         {
           "properties": {
@@ -185,6 +198,13 @@
       "valueAxis": [
         {
           "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "labelPrecision": {
               "expr": {
                 "Literal": {
@@ -317,7 +337,34 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Volume vs margin - 220 products, four quadrants'"
+                  "Value": "'Volume vs margin by product'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'220 products in four quadrants, bubble size = revenue, lines = averages'"
                 }
               }
             },

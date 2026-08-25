@@ -4,14 +4,14 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 52.794871209672586,
-        "y": 1.6760277073994398
+        "x": 50.735993300600214,
+        "y": 0
       },
       "nodes": [
         {
           "location": {
-            "x": 963.547930284443,
-            "y": 48.454615175769504
+            "x": 1180.0217876360816,
+            "y": 287.04988860713758
           },
           "nodeIndex": "_Measures",
           "nodeLineageTag": "4fec034d-016a-4580-8e07-ef9690678927",
@@ -19,19 +19,20 @@
             "height": 104,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
-            "x": 690.58028724873225,
-            "y": 697.065510259305
+            "x": 690.19556210937276,
+            "y": 524.8764445843691
           },
           "nodeIndex": "DimDate",
+          "nodeLineageTag": "6a86cedc-a1fe-498e-bdf0-160ccd975a29",
           "size": {
-            "height": 248,
+            "height": 269.35196580101024,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
@@ -41,22 +42,23 @@
           "nodeIndex": "DimPharmacy",
           "nodeLineageTag": "546e85d9-98f9-4eb6-b97b-5ac46efe2877",
           "size": {
-            "height": 300,
-            "width": 234
+            "height": 301.40933314723884,
+            "width": 235.40933314723895
           },
-          "zIndex": 0
+          "zIndex": 6
         },
         {
           "location": {
-            "x": 75.140414861748837,
-            "y": 0
+            "x": 113.06284242699937,
+            "y": 58.463742496427912
           },
           "nodeIndex": "DimProduct",
+          "nodeLineageTag": "ba733917-48d8-4b7d-bf00-e60e1762a409",
           "size": {
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 3
         },
         {
           "location": {
@@ -68,7 +70,7 @@
             "height": 296,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 4
         },
         {
           "location": {
@@ -80,11 +82,11 @@
             "height": 104,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 5
         }
       ],
       "name": "All tables",
-      "zoomValue": 79.553182037699813,
+      "zoomValue": 70.955543900968848,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

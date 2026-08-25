@@ -85,7 +85,34 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Category > brand share'"
+                  "Value": "'Revenue share by category and brand'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Tile size = revenue, drill down from category to brand'"
                 }
               }
             },

@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "e9f3b88d5fbb57ac9558",
   "position": {
     "x": 751.89221969088555,
     "y": 455.16332584858964,
-    "z": 7000,
+    "z": 4000,
     "height": 248.39296543359612,
     "width": 511.555242325406,
-    "tabOrder": 7000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -114,7 +114,34 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Category > brand, promo vs non-promo'"
+                  "Value": "'Promo impact by category and brand'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Expand a category to see its brands, columns split promo vs non-promo'"
                 }
               }
             },

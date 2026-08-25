@@ -102,7 +102,34 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Pareto - top 10 of 38 regions carry 47% of revenue'"
+                  "Value": "'Revenue concentration by region'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top 10 of 38 regions carry 47% of revenue'"
                 }
               }
             },

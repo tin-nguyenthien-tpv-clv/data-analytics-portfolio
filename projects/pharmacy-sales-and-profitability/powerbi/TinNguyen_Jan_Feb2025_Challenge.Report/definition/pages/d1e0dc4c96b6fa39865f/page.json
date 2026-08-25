@@ -4,5 +4,45 @@
   "displayName": "Promotion",
   "displayOption": "FitToPage",
   "height": 720,
-  "width": 1280
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a6dca75e9bf22b902e12",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimProduct"
+              }
+            },
+            "Property": "Category"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "572308698408576b6f1f",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "d4a0cf2affcf37c78e05",
+        "boundFilter": "a6dca75e9bf22b902e12",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimProduct"
+              }
+            },
+            "Property": "Category"
+          }
+        }
+      }
+    ],
+    "referenceScope": "CrossReport"
+  }
 }
