@@ -52,78 +52,45 @@ Three relationships, all single-direction one-to-many from dimension to fact: `D
 
 ## 3. Data Limits and Assumptions
 
-Five properties of the raw files change how these findings should be read.
+This file was generated for a challenge, and four of its properties are provable from the raw workbook itself. Each is stated here because it changes what Section 4 is allowed to claim.
 
-**1. The margin rate is effectively a constant across geography.**
-Margin % runs 27.84%-28.16% across all 8 countries - a spread of **0.32pp**. Across 38 regions, 27.69%-28.61%. Across Urban / Suburban / Rural, 27.98%-28.11%. Across S / M / L store sizes, 28.03%-28.06%. Real pharmacy chains vary widely by country because reimbursement regimes and price regulation differ.
-*Consequence:* the geographic pages answer "who is big", not "who is efficient". The report says so explicitly rather than manufacturing a difference, and it deliberately avoids colour-scaling any map or heat map by `Margin %`, because auto-scaling a 0.32pp spread renders as eight distinct colours and invents a pattern that does not exist.
+**1. Margin % is locked at ~28% across every geography, because cost carries the same country index as price.**
+Average unit price runs EUR 15.20 in Poland to EUR 21.41 in the Netherlands, a **1.41x** spread. Margin % across those same eight countries moves only 27.84%-28.16%, a spread of **0.33pp**. Across 38 regions it is 0.91pp, across Urban / Suburban / Rural 0.12pp, across S / M / L store sizes 0.03pp. Recomputed from the raw file, each country's cost index divided by its price index lands at 0.9571-0.9589 - constant to within 0.2% across all eight. Real pharmacy chains vary widely by country because reimbursement regimes and price regulation differ.
+*Consequence:* the geographic pages answer "who is big", not "who is efficient". The report says so explicitly rather than manufacturing a difference, and it deliberately avoids colour-scaling any map or heat map by `Margin %`, because auto-scaling a 0.33pp spread renders as eight distinct colours and invents a pattern that does not exist.
 
 ![Margin % by country on a fixed axis](assets/03_1_margin%20rate_limit.png)
 
-**2. Category mix is uniform across every country, which is what makes margin flat.**
-Prescription is 30.8%-33.6% of revenue in all 8 countries, OTC 20.0%-21.5%, Wellness 19.2%-21.2%. The same holds across store types (Prescription 31.7% / 32.5% / 32.6% for Rural / Suburban / Urban). Margin is a property of the mix, and every market sells the same mix, so every market lands on the same margin. Generator artifact, not market insight.
-
-The category margin rates are identical country to country as well, so neither the mix nor the rates inside it move: Prescription lands at 21.75%-22.04% everywhere, Wellness at 33.48%-33.81%.
+**2. Margin only moves with product mix, and the mix is cloned into every market.**
+Category margin rates are identical country to country: Prescription lands at 21.75%-22.04% everywhere, OTC at 29.27%-29.47%, Wellness at 33.48%-33.81%. The mix itself is just as uniform - Prescription is 30.8%-33.7% of revenue in all 8 countries, OTC 20.1%-21.5%, Wellness 19.2%-21.2%. The same holds across store types (Prescription 31.7% / 32.5% / 32.6% for Rural / Suburban / Urban), and an average store sells 183.5 of the 220 products, so mix cannot differ store to store either.
+*Consequence:* every margin claim in Section 4 is read at category and product level. Cuts that look like margin drivers but are really category in disguise - brand, generic versus branded - are flagged where they appear.
 
 ![Margin % by country and category](assets/03_2_margin%20flat_limit.png)
 
-**3. Eleven of 120 stores opened inside the observation window, so raw revenue rankings rank store age.**
-Vienna HealthPoint #115 opened 2025-12-13 and traded **10 days**. On raw `Total Revenue` the network spreads **102.6x**. Across the 109 established stores on revenue per trading day it spreads **3.33x** - EUR 94.75 to EUR 315.80.
-*Consequence:* every store comparison uses the normalised basis, with a `Store Cohort` slicer on each page.
+**3. `PromoFlag` is a random row flag with no volume response.**
+Promotion is 10.16%-11.73% of revenue in every country and 11.6%-12.4% of rows in every store size band, on weekdays and weekends alike - blanket application, not targeting. Average price falls in all five categories while units per transaction barely moves, and four of the five sell *fewer* on promotion: Personal Care 9.22 to 8.77, OTC 9.17 to 9.03, Wellness 7.18 to 7.07, Medical Devices 2.30 to 2.26, only Prescription edging up 4.82 to 4.84. Compared like for like inside the same product, promo rows average **0.97x** the units of non-promo rows across all 220 products.
+*Consequence:* Page 5 sizes the give-away. It does not measure campaign effectiveness, and the absence of uplift is a property of the generator rather than a marketing failure.
 
-<!-- ![Lifecycle bias in raw store rankings](assets/03_3_lifecycle_limit.png) -->
+<!-- ![Promotion produces no volume uplift](assets/03_3_promo_limit.png) -->
+<!-- Capture: Promotion page, *Units per sale, promo vs non-promo* -->
 
-**4. Promotion produces no volume response, which is commercially implausible.**
-Average price falls in all five categories while units per transaction barely moves, and four of the five sell *fewer* on promotion - Personal Care 9.22 to 8.77, OTC 9.17 to 9.03, Wellness 7.18 to 7.07, Medical Devices 2.30 to 2.26, only Prescription edging up 4.82 to 4.84. Promo is 10.16%-11.73% of revenue in every country and costs 8.36-9.18pp of margin in every category.
-*Consequence:* this reads as a randomly assigned flag with a fixed discount, not a modelled campaign. Treat the EUR 82,709 margin-foregone figure as a demonstration of method, not a recoverable number.
+**4. Eleven of 120 stores opened inside the observation window, so raw revenue ranks store age and store size.**
+Vienna HealthPoint #115 opened 2025-12-13 and traded **10 days**. On raw `Total Revenue` the network spreads **102.6x**. Across the 109 established stores on revenue per trading day it spreads **3.33x** - EUR 94.75 to EUR 315.80. Even that residue is not performance: sorted by revenue per trading day, the top eight established stores are all `StoreSizeBand = L` and the bottom eight are all `S`.
+*Consequence:* every store comparison uses the normalised basis, with a `Store Cohort` slicer on each page, and `StoreSizeBand` sits in the league table so size can be read alongside the ranking.
 
-<!-- ![Promotion produces no volume uplift](assets/03_4_promo_uplift_limit.png) -->
+<!-- ![Store rankings track cohort and size band](assets/03_4_store_normalisation_limit.png) -->
+<!-- Capture: Store Performance page, *Store league table* sorted by Revenue per Active Day, StoreSizeBand column visible -->
 
-**5. Monthly seasonality is largely a calendar-length artifact.**
-Pooled over both years February earns EUR 656,408 against January EUR 693,212 and March EUR 700,991, about 6% below its neighbours. But February has 57 trading days to their 62: **per day it out-earns both**, EUR 11,516 against EUR 11,181 and EUR 11,306. Day-normalised, the twelve monthly indices sit inside **0.95-1.05** and margin % varies **0.41pp** across the year.
-*Consequence:* the real time signal is the weekday/weekend split, invisible in the source until `DayName` was derived.
-
-<!-- ![Seasonality is a day-count artifact](assets/03_5_seasonality_limit.png) -->
-
-**Geographic position also fails to predict performance.** Across the 109 established stores latitude correlates with revenue per trading day at **r = +0.09** (+0.28 excluding Poland) and longitude at **r = -0.15**. The four latitude bands are not even monotonic: 48-52 N leads at EUR 213/day, the northernmost band sits at EUR 197 and the southernmost at EUR 186. Poland, the weakest market, is a country effect, not a spatial one. *Data-shape note, no page visualises it.*
-
-<!-- ![Latitude versus revenue per trading day](assets/03_6_latitude_limit.png) -->
-
-Minor notes: `DiscontinuedDate` is blank for 185 of 220 products, and `OpenDate` reaches back to 2010 while the fact table covers only 2024-2025.
+Minor notes: `DiscontinuedDate` is blank for 185 of 220 products, `OpenDate` reaches back to 2010 while the fact table covers only 2024-2025, and the source `DimDate` ships no day-of-week column - `DayName` and `DayType` are derived in the model, which is what makes Insight 4.4 visible at all.
 
 ---
 
 ## 4. Executive Summary & Key Insights
 
-Section 4.6 names the page and visual behind every claim.
+EUR 8,633,977 revenue, EUR 2,421,141 margin, a **28.04%** margin rate, 445,793 units, 120 pharmacies, 731 days. Revenue grew **+4.43%** from 2024 to 2025 with the margin rate essentially unchanged (27.97% to 28.11%, **+0.13pp**).
 
-### 4.1 The network is stable and time explains almost nothing
+Four findings survive the four limits above. Each names the page and visual it comes from.
 
-EUR 8,633,977 revenue, EUR 2,421,141 margin, a **28.04%** margin rate, 445,793 units, 120 pharmacies, 731 days.
-
-* 2024 EUR 4,223,414 to 2025 EUR 4,410,563 = **+4.43%**, with the margin rate essentially unchanged (27.97% to 28.11%, **+0.13pp**).
-* Day-normalised, the twelve monthly indices span only **0.95-1.05** and margin % varies **0.41pp**.
-* Weekdays earn **EUR 12,471/day** against weekends **EUR 10,153/day**, an **18.6%** gap - larger than the entire month-to-month spread of 10.9%, and the strongest time effect in the data.
-
-<!-- ![Weekday versus weekend rhythm](assets/04_1_weekday_rhythm.png) -->
-
-### 4.2 Geography is a story about scale, not efficiency
-
-* Germany 18.2%, France 16.3% and Italy 15.4% carry **49.9%** of revenue. The top 10 of 38 regions carry **46.9%**.
-* Profitability does not vary: all 8 countries land between **27.84%** and **28.16%** margin.
-* Scale does: revenue per store runs Belgium EUR 89,036 down to Poland EUR 54,941, a **1.62x** spread that is entirely volume.
-
-<!-- ![Revenue concentration versus flat margin by country](assets/04_2_geography_scale.png) -->
-
-### 4.3 Store rankings only mean something after normalisation
-
-* Raw revenue ranks store age. Excluding in-window openings and dividing by trading days collapses the spread from **102.6x to 3.33x**.
-* The genuine laggards are all Polish: Poznan #068 (EUR 95/day), Warsaw #030 (EUR 100), Katowice #080 (EUR 110), Gdansk #064 (EUR 117), Poznan #025 (EUR 127), against a network median of **EUR 193**. Poland's median EUR 143 sits **33%** below the Netherlands at EUR 215.
-* Format drives volume only: Urban EUR 82,506 per store, Suburban EUR 66,155, Rural EUR 60,843, all three at 27.98%-28.11% margin. Size band L EUR 126,898 against S EUR 38,713, a **3.28x** spread, again at identical margin.
-
-<!-- ![Raw ranking versus normalised ranking](assets/04_3_store_league.png) -->
-
-### 4.4 Margin comes from the product mix
+### 4.1 Margin comes from the product mix, and nowhere else
 
 | Category | Revenue | % of revenue | Margin % | Avg price |
 |---|---|---|---|---|
@@ -133,14 +100,15 @@ EUR 8,633,977 revenue, EUR 2,421,141 margin, a **28.04%** margin rate, 445,793 u
 | Personal Care | EUR 1,454,603 | 16.9% | **33.47%** | EUR 14.33 |
 | Medical Devices | EUR 872,572 | 10.1% | **24.96%** | EUR 62.79 |
 
-* The largest revenue line is the least profitable: **11.66pp** from Prescription to Wellness.
-* Brands spread wider than categories, **20.37%-35.31%** across 32. AntiBioX leads revenue (EUR 726,405) at 23.39%, ZenHealth earns **35.31%** on EUR 285,040, 39% of AntiBioX's revenue at 1.5x the rate.
-* Generics run 14.6% of revenue at **25.48%** against **28.48%** branded.
-* Quadrants against averages of 2,026 units and 28.04% margin per product: **109 Stars, 18 Volume drivers, 21 Niche premium, 72 Low priority**. Low priority still carries EUR 3.61M, where the high-price low-volume Prescription and Medical Devices lines land.
+* The largest revenue line is the least profitable: **11.66pp** from Prescription to Wellness. At product level the spread is wider still, 17.48%-38.83% across 220 products.
+* Brands appear to spread **20.37%-35.31%** across 32, but that is category in disguise - the four highest-margin brands are all Wellness or Personal Care, the four lowest all Prescription or Medical Devices. AntiBioX leads revenue (EUR 726,405) at 23.39%; ZenHealth earns **35.31%** on EUR 285,040, 39% of AntiBioX's revenue at 1.5x the rate.
+* The same trap catches generics. Pooled, they run 14.6% of revenue at **25.48%** against **28.48%** branded - a 3pp penalty that vanishes on inspection, because generics exist only in OTC and Prescription. Inside OTC the gap is **-0.33pp**, and inside Prescription generics actually earn **+0.63pp more**.
 
-<!-- ![Four-quadrant product scatter](assets/04_4_product_quadrant.png) -->
+> **Page 4 - Product Mix:** *Revenue vs margin by category* (the two rankings invert), *Revenue by brand*, *Generic vs branded margin*.
 
-### 4.5 Promotion is where margin is lost
+<!-- ![Revenue versus margin by category](assets/04_1_product_mix.png) -->
+
+### 4.2 Promotion costs 9.08pp of margin and buys no volume
 
 | Metric | Non-Promo | Promo | Delta |
 |---|---|---|---|
@@ -150,47 +118,43 @@ EUR 8,633,977 revenue, EUR 2,421,141 margin, a **28.04%** margin rate, 445,793 u
 | **Units per transaction** | **7.195** | **7.023** | **-2.39%** |
 
 * **No volume uplift at all.** Units per transaction is marginally *lower* on promotion, so an 11% discount buys nothing.
-* The sacrifice is near-identical everywhere: Prescription -9.18pp, Medical Devices -8.92pp, OTC -8.73pp, Wellness -8.67pp, Personal Care -8.36pp.
-* Blanket application rather than targeting: promo is 10.16%-11.73% of revenue in every country.
-* **Margin foregone EUR 82,709** over 24 months, about **EUR 41,355/year**, computed as promo revenue valued at the non-promo margin rate less actual promo margin.
+* The sacrifice is near-identical in every category: Prescription -9.18pp, Medical Devices -8.92pp, OTC -8.73pp, Wellness -8.67pp, Personal Care -8.36pp.
+* **Margin foregone.** The `Margin Foregone` card reads **EUR 82,709**, computed as promo revenue valued at the non-promo margin rate. That counterfactual holds revenue constant and lifts the rate. Valuing the same rows at full list price instead - the correct comparison, since `CostEUR` is unaffected by the flag - puts the actual give-away at **EUR 130,336**, about **EUR 65,168/year** or **5.4%** of total margin. *(See limitation 3: in this dataset the absence of uplift is a generator property, so treat the figure as a demonstration of method.)*
 
-<!-- ![Promo margin gap by category](assets/04_5_promo_margin_gap.png) -->
+> **Page 5 - Promotion:** *Margin % by category, promo vs non-promo*, *Units per sale, promo vs non-promo*, KPI cards.
 
-### 4.6 Insight to visual traceability
+<!-- ![Promo margin gap by category](assets/04_2_promo_margin_gap.png) -->
 
-| # | Insight | Page | Visual |
-|---|---|---|---|
-| 1 | +4.43% revenue growth, margin rate flat | Overview | KPI cards, combo trend by `YearMonth` |
-| 2 | Monthly seasonality is a day-count artifact | Overview | *Avg Daily Revenue by MonthName and Year* |
-| 3 | Weekends run 18.6% below weekdays | Overview | *Avg Daily Revenue by DayName and DayType* |
-| 4 | Country contribution to the 2024-2025 change | Overview | waterfall, `Year` broken down by `Country` |
-| 5 | Revenue composition holds steady over time | Overview | stacked area, `YearMonth` x `Country` |
-| 6 | Top 3 countries = 49.9% of revenue | Geography | *Revenue by country* |
-| 7 | Top 10 of 38 regions = 46.9% | Geography | *Revenue concentration by region* with `Cumulative Revenue %` |
-| 8 | Margin % identical in all 8 countries | Geography | *Margin % by country* on a fixed 0-35% axis |
-| 9 | Where the stores physically are | Geography | *Where the stores are*, Azure Maps bubble layer |
-| 10 | Performance spread inside a country | Geography | *Revenue by geography* drill-down, *Country and region scorecard* |
-| 11 | 11 in-window openings distort rankings | Store Performance | `Store Cohort` slicer, *Revenue per trading day by store* |
-| 12 | Bottom 5 stores per trading day are all Polish | Store Performance | *Revenue per trading day by store*, *Store league table* |
-| 13 | Urban/Suburban/Rural differ in volume only | Store Performance | *Revenue per store by location type* |
-| 14 | Per-store margin gap against its own region | Store Performance | *Margin gap vs own region*, `Rank in Region` |
-| 15 | Prescription: most revenue, least margin | Product Mix | *Revenue vs margin by category* |
-| 16 | High-volume/low-margin vs low-volume/high-margin | Product Mix | *Volume vs margin by product*, `Product Segment` table |
-| 17 | Brand margin spreads 20.4%-35.3% | Product Mix | *Revenue by brand* |
-| 18 | Generics run 3pp below branded | Product Mix | *Generic vs branded margin* |
-| 19 | Promo costs 9.08pp of margin | Promotion | KPI cards, *Margin % by category, promo vs non-promo* |
-| 20 | Promo generates zero volume uplift | Promotion | *Units per sale, promo vs non-promo* |
-| 21 | Promo is untargeted | Promotion | *Promo revenue over time*, *Promo impact by category and brand* |
+### 4.3 Scale explains the network; efficiency explains nothing
+
+* Germany 18.2%, France 16.3% and Italy 15.4% carry **49.9%** of revenue - on exactly **50.0%** of the stores, 60 of 120. Across the eight countries, store count and revenue correlate at **r = 0.91**. The top 10 of 38 regions carry 46.9%, on the same logic.
+* Profitability does not vary with any of it: all 8 countries land between **27.84%** and **28.16%** margin.
+* Store rankings tell the same story. Raw revenue spreads **102.6x**, revenue per trading day **3.33x**, and what is left tracks `StoreSizeBand` - L stores average EUR 126,898 against S at EUR 38,713, a **3.28x** spread at identical margin.
+* Format drives volume only: Urban EUR 82,506 per store, Suburban EUR 66,155, Rural EUR 60,843, all three at 27.98%-28.11% margin.
+
+> **Page 2 - Geography:** *Country and region scorecard* puts `Revenue Contribution %`, `Active Pharmacies` and `Margin %` in one matrix - contribution tracks store count, margin does not move. **Page 3 - Store Performance:** *Store league table*, *Revenue per store by location type*.
+
+<!-- ![Contribution tracks store count while margin stays flat](assets/04_3_scale_not_efficiency.png) -->
+
+### 4.4 The weekday/weekend split is the strongest time signal in the data
+
+* Weekdays earn **EUR 12,471/day** against weekends **EUR 10,153/day**, an **18.6%** gap. Monday peaks at EUR 12,681, Sunday troughs at EUR 10,007.
+* It is footfall, not basket. Transactions per day fall from 89.8 to 73.0 (**-18.7%**) while revenue per transaction holds at EUR 138.91 against EUR 139.07 and units per transaction at 7.16 against 7.21. Adding `Units per Sale` to the weekday chart makes this visible in one line: it flatlines while revenue drops.
+* Larger than the entire month-to-month spread. Once day counts and store openings are held constant, the twelve monthly indices sit inside **0.97-1.05** and margin % varies **0.41pp** across the year - February only looks weak because it has 57 trading days to January's and March's 62, and per day it out-earns both.
+* The signal was invisible in the source until `DayName` and `DayType` were derived.
+
+> **Page 1 - Overview:** *Avg Daily Revenue by DayName and DayType*, *Avg Daily Revenue by MonthName and Year*.
+
+<!-- ![Weekday versus weekend rhythm](assets/04_4_weekday_rhythm.png) -->
 
 ---
-
 ## 5. Actionable Recommendations
 
-1. **Stop untargeted promotion, approximately EUR 41,355/year.** The flag is spread evenly across every country, store type and category and buys no incremental volume. Withdrawing blanket promotion recovers the full margin sacrifice. *(See limitation 4: in this dataset the absence of uplift is a generator property.)*
+1. **Stop untargeted promotion, approximately EUR 65,168/year.** The flag is spread evenly across every country, store type and category and buys no incremental volume, so withdrawing it recovers the full discount rather than trading margin for lost sales. *(See limitation 3: in this dataset the absence of uplift is a generator property, so read the figure as a demonstration of method.)*
 2. **If promotion continues, restrict it to Wellness and Personal Care.** Their 33.5% base margin absorbs a 9pp discount, the same discount on Prescription (21.92% base) consumes 42% of the product's profit.
-3. **Shift mix toward Wellness and Personal Care, approximately EUR 25,173/year.** Moving 5 percentage points of revenue out of Prescription into Wellness captures the 11.66pp gap, worth EUR 50,345 across the two-year window.
-4. **Fix Poland before touching store formats.** The five weakest stores per trading day are all Polish and the country median trails the network by 33%. Store format is not the lever, margin is identical across Urban, Suburban and Rural.
-5. **Reconsider weekend staffing and hours.** Weekends run 18.6% below weekdays, a wider gap than the entire 10.9% month-to-month spread.
+3. **Shift mix toward Wellness and Personal Care, approximately EUR 25,168/year.** Moving 5 percentage points of revenue out of Prescription into Wellness captures the 11.66pp gap, worth EUR 50,336 across the two-year window.
+4. **Reconsider weekend staffing and hours.** Weekends run 18.6% below weekdays on transaction count alone, with basket value unchanged - a wider gap than the entire 8.1% month-to-month spread.
+5. **Do not treat any country or store format as a turnaround case.** The five weakest stores per trading day are Polish, but Poland's shortfall is its price index rather than its trading: unit prices run 22% below France while units per trading day are marginally *higher*, 10.15 against 10.00. Priced neutrally the eight markets sit within **1.14x** of each other, and margin is identical across every country, region, format and size band. The levers here are 1 to 3, all of them mix.
 
 ---
 
@@ -204,7 +168,9 @@ KPI row, revenue and margin trend with `Margin %` on a fixed axis, day-count-nor
 ![Overview page](assets/01_Overview.png)
 
 ### Page 2 - Geography
-Azure Maps bubble layer over all 120 stores, a Pareto of the 38 regions against cumulative revenue share, revenue by country, the deliberate "margin is flat everywhere" bar chart that sets up Page 4, a Country -> Region -> City -> Pharmacy drill-down, and a contribution matrix.
+Azure Maps bubble layer over all 120 stores, a Pareto of the 38 regions against cumulative revenue share, revenue by country, a Country -> Region -> City -> Pharmacy drill-down, and the *Country and region scorecard* matrix that carries `Revenue Contribution %`, `Active Pharmacies` and `Margin %` side by side - contribution tracks store count, margin does not move.
+
+> The deliberate "margin is flat everywhere" bar chart behind limitation 1 currently sits on the hidden *Data Mining* page rather than here.
 
 > The Azure Maps visual needs two tenant switches under **Admin portal -> Tenant settings -> Integration settings**: *Users can use the Azure Maps visual*, and, for tenants outside the US/EU, *Data sent to Azure Maps can be processed outside your tenant's geographic region, compliance boundary, or national cloud instance*, which is **disabled by default**.
 
@@ -229,7 +195,7 @@ Promo KPI row including margin foregone, the per-category margin gap, the units-
 
 ## 7. Key DAX Logic
 
-Peer comparison is the analytical core. A store is judged against stores in its own region, per trading day, so neither store age nor regional scale distorts the ranking. `ALLEXCEPT` clears the current store's own filters while keeping the region it belongs to, which turns a per-store measure into a per-region peer set.
+Peer comparison is the analytical core. A store is judged against stores in its own region, per trading day, so regional scale does not distort the ranking and - with the `Store Cohort` slicer applied - neither does store age. `ALLEXCEPT` clears the current store's own filters while keeping the region it belongs to, which turns a per-store measure into a per-region peer set.
 
 ```dax
 Rank in Region =
@@ -242,7 +208,7 @@ RANKX(
 )
 ```
 
-This one measure is what turns a 102.6x raw revenue spread, which mostly ranks store age, into a 3.33x like-for-like comparison that surfaces the genuine laggards.
+This one measure is what turns a 102.6x raw revenue spread, which mostly ranks store age, into a 3.33x like-for-like comparison within each region. It does not clear `StoreSizeBand`, which is why limitation 4 matters and why the league table carries the size band as a visible column: dividing `Revenue per Active Day` by its own band average collapses the remaining spread to **1.40x**, and at that point no country is a laggard.
 
 > All 47 measures, the six calculated columns and the model conventions behind them are documented in [`docs/DAX_DOCUMENTATION.md`](docs/DAX_DOCUMENTATION.md).
 

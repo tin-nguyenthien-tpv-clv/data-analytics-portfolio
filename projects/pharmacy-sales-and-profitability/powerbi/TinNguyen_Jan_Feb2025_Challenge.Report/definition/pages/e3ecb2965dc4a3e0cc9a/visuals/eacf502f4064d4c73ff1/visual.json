@@ -13,6 +13,9 @@
     "visualType": "pivotTable",
     "query": {
       "queryState": {
+        "Columns": {
+          "projections": []
+        },
         "Rows": {
           "projections": [
             {
@@ -102,21 +105,16 @@
         "sort": [
           {
             "field": {
-              "Aggregation": {
+              "Measure": {
                 "Expression": {
-                  "Column": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "DimPharmacy"
-                      }
-                    },
-                    "Property": "Store Cohort"
+                  "SourceRef": {
+                    "Entity": "_Measures"
                   }
                 },
-                "Function": 3
+                "Property": "Total Revenue"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
         ]
       }
